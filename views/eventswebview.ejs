@@ -1,0 +1,71 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/events.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"
+    ></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/event1.js"></script>
+
+   
+  </head>
+
+  <body
+    ng-app="homeApp"
+    ng-controller="eventCtrl"
+    ng-init="initialize(<%=JSON.stringify(eventId)%>)"
+  >
+
+  <!-- <a
+        href=""
+        class="btn unselected"
+        ng-click="register()"
+        style="border-radius:20px;font-weight: 700;"
+        >Pay Now</a
+      ><br /> -->
+      <div>&nbsp;</div>
+    </div>
+    <form name="paymentForm" action="/payment/pay" method="POST">
+      <input
+        type="hidden"
+        name="regId"
+        ng-value="{{ message.receiptID }}"
+        value="{{ message.receiptID }}"
+      />
+      <input type="submit" style="display: none" />
+    </form>
+
+
+  </body>
+</html>
+
+<!--register button after clicking register /payment/pay -->

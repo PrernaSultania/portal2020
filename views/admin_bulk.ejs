@@ -1,0 +1,370 @@
+<!--This uses Papaparse to parse csv to json and import data.-->
+<html lang="en" ng-app="app">
+  <head>
+    <title>Bulk Import</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../stylesheets/bulk/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="../stylesheets/bulk/normalize.min.css" />
+    <link rel="stylesheet" href="../stylesheets/bulk/milligram.min.css" />
+    <link rel="stylesheet" href="../stylesheets/bulk/toastr.min.css" />
+    <link rel="stylesheet" href="../stylesheets/bulk/vex.min.css" />
+    <link rel="stylesheet" href="../stylesheets/bulk/vex-theme-os.min.css" />
+    <!-- JS Files -->
+    <script src="../js/bulk/jquery.min.js"></script>
+    <script src="../js/bulk/vex.combined.min.js"></script>
+    <script>
+      vex.defaultOptions.className = "vex-theme-os";
+    </script>
+    <script src="../js/bulk/pace.min.js"></script>
+    <script src="../js/bulk/angular.min.js"></script>
+    <script src="../js/bulk/toastr.min.js"></script>
+    <!-- Papaparser -->
+    <script src="../js/bulk/papaparse.min.js"></script>
+
+    <style media="screen">
+      .blackbutton {
+        background-color: black;
+        border-color: black;
+      }
+
+      .black {
+        color: black;
+      }
+    </style>
+  </head>
+
+  <body ng-controller="bulkCtrl">
+    <div class="container">
+      <div class="column column-80 column-offset-10">
+        <div class="row">
+          <div class="column column-70">
+            <h1 class="black">Bulk Registration</h1>
+          </div>
+          <div class="column">
+            <a class="button" href="/bulkSample.csv">Sample File</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column column-70">
+            <label for="files"
+              >Please select a
+              <b>valid</b>
+              <em>csv</em> file</label
+            >
+            <br />
+            <input
+              type="file"
+              id="files"
+              name="files"
+              ng-model="files"
+              accept=".csv"
+            />
+          </div>
+          <div class="column">
+            <h2>
+              Total for valid data :
+              <span class="black"> {{ data.length }} </span>
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <button type="button" ng-click="validate()">Validate</button>
+        </div>
+        <div class="row">
+          <button
+            type="button"
+            ng-disabled="!data.length || invalid.length"
+            ng-click="confirm('submit data?', submit);"
+          >
+            Submit
+          </button>
+        </div>
+        <h2>Valid Data</h2>
+        <table>
+          <tr ng-repeat="val in data">
+            <td ng-repeat="elem in val">
+              {{ elem }}
+            </td>
+          </tr>
+        </table>
+
+        <h2 ng-if="invalid.length>0">
+          Invalid Data
+          <small>(Please correct the data and try again!)</small>
+        </h2>
+        <table>
+          <tr ng-repeat="val in invalid">
+            <td ng-repeat="elem in val">
+              {{ elem }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      vex.defaultOptions.className = "vex-theme-os";
+      toastr.options = {
+        closeButton: true,
+        debug: false,
+        newestOnTop: true,
+        progressBar: false,
+        positionClass: "toast-top-right",
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "5000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+      };
+
+      angular.module("app", []).controller("bulkCtrl", [
+        "$http",
+        "$scope",
+        function($http, $scope) {
+          $scope.events = [];
+          $scope.eventsList = {};
+          //      Reg-ex.
+          $scope.regex = {
+            Email: {
+              val: new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+              regex: true
+            },
+            Regno: { val: new RegExp("1[0-9][A-Z]{3}[0-9]{4}"), regex: true },
+            Gender: { val: ["male", "female"], regex: false },
+            Tshirt: { val: ["S", "M", "L", "XL", "XXL"], regex: false },
+            Event: { val: $scope.events, regex: false },
+            Phone: { val: new RegExp(/^\d{10}$/), regex: true }
+          };
+
+          $scope.submit = function() {
+            if ($scope.invalid.length) {
+              toastr["error"]("You have some invalid data available.");
+              toastr["info"](
+                "Submission will be active only if all data is valid."
+              );
+            } else {
+              $scope.users = [];
+              $scope.data.forEach(function(user) {
+                let userData = {};
+                userData.registration = user.Regno;
+                userData.name = user.Name;
+                userData.email = user.Email;
+                userData.gender = user.Gender;
+                userData.room = user.Room;
+                userData.contact = user.Phone;
+                userData.eventIds = [$scope.eventsList[user.Event]];
+                userData.tShirtSize = user.Tshirt;
+                $scope.users.push(userData);
+              });
+              toastr["info"]("Working!");
+              $http
+                .post("/admin/bulk", { users: $scope.users })
+                .then(success, failure);
+            }
+          };
+
+          function success(res) {
+            if (!res.data.success) {
+              return failure(res.data);
+            }
+            // // console.log("Data sent", $scope.users);
+            toastr["success"]("", "Bulk Imported Successfully.");
+            vex.dialog.open({
+              message: "Now that the data is imported, page will be refreshed!",
+              callback: function() {
+                window.location.reload();
+              }
+            });
+          }
+
+          function failure(res) {
+            // // console.log(res);
+            toastr["error"](
+              "Error message:" + res.message,
+              "Bulk Import Failed."
+            );
+          }
+
+          $http.get("/admin/event").then(
+            function(res) {
+              // // console.log(res);
+              $scope.events = res.data.events.map(function(e) {
+                $scope.eventsList[e.name] = e._id;
+                return e.name;
+              });
+              $scope.regex.Event.val = $scope.events;
+              // console.log("Events", $scope.eventsList);
+              // // console.log($scope.eventsList);
+            },
+            function(res) {
+              toastr["error"]("Check internet connectivity!");
+              // console.log(res);
+            }
+          );
+
+          $scope.file = null;
+          $scope.data = [];
+          $scope.invalid = [];
+          $scope.fields = [
+            "Regno",
+            "Name",
+            "Email",
+            "Gender",
+            "Room",
+            "Phone",
+            "Event",
+            "Tshirt"
+          ];
+          $scope.validate = function() {
+            $scope.data = [];
+            $scope.invalid = [];
+            $scope.checkValid();
+          };
+
+          $scope.checkValid = function() {
+            var file = document.getElementById("files").files[0];
+            $scope.file = file;
+
+            if (!file) {
+              alert("Please select a file.");
+              return;
+            }
+
+            //  Callback.
+            var validHeaders = function(result) {
+              // console.log($scope.fields);
+
+              var keys = result.data[0];
+              // console.log(keys);
+              if (
+                !$scope.fields.every(function(e) {
+                  return keys.lastIndexOf(e) == -1 ? false : true;
+                })
+              ) {
+                alert("Headers don't match");
+              } else {
+                $scope.parse();
+              }
+            };
+
+            // configured for 1 row (check header).
+            var config = {
+              headers: false,
+              preview: 1,
+              complete: validHeaders,
+              error: $scope.onParsingError
+            };
+
+            //Parse only 1 row to check for headers.
+            Papa.parse($scope.file, config);
+          };
+
+          //  Parse complete file.
+          $scope.parse = function() {
+            // // console.log($scope.file);
+            // // console.log($scope.config);
+            Papa.parse($scope.file, $scope.config);
+          };
+
+          //  Error handling function
+          $scope.onParsingError = function(error) {
+            // console.log(error);
+            alert("the provided csv file was not valid.");
+          };
+
+          //  Callback on successful parsing.
+          $scope.onParsingComplete = function(results) {
+            var data = results.data;
+            // // console.log(results);
+            // // console.log($scope.regex);
+            $scope.validateData(data);
+          };
+          var check = function(data, key) {
+            var temp = $scope.regex[key],
+              val;
+            if (temp.regex) {
+              val = temp.val.test(data[key]);
+            } else {
+              val = temp.val.lastIndexOf(data[key]) != -1;
+            }
+            if (!val) {
+              // console.log("nlah", data);
+              $scope.invalid.push(Object.assign({}, data, { invalid: key }));
+              toastr["error"](
+                "Please fix error for " + data.Regno,
+                "Validation error - " + key
+              );
+            }
+            return val;
+          };
+          //  Validate participant details.
+          $scope.validateData = function(data) {
+            // console.log("data", data);
+
+            $scope.data = data
+              .filter(function(e) {
+                return check(e, "Gender");
+              })
+              .filter(function(e) {
+                return check(e, "Email");
+              })
+              .filter(function(e) {
+                return check(e, "Regno");
+              })
+              .filter(function(e) {
+                return check(e, "Tshirt");
+              })
+              .filter(function(e) {
+                return check(e, "Event");
+              })
+              .filter(function(e) {
+                return check(e, "Phone");
+              });
+
+            $scope.$apply();
+          };
+
+          //  Configuring papa parse.
+          $scope.config = {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: $scope.onParsingComplete,
+            error: $scope.onParsingError
+          };
+
+          $scope.confirm = function(m, cb) {
+            vex.dialog.confirm({
+              message: "Are you sure you want to " + m,
+              callback: function(value) {
+                //// console.log("working!"+value);
+                if (value) {
+                  cb();
+                  $scope.$apply();
+                }
+              },
+              buttons: [
+                $.extend({}, vex.dialog.buttons.YES, {
+                  text: "Yes"
+                }),
+                $.extend({}, vex.dialog.buttons.NO, {
+                  text: "No"
+                })
+              ]
+            });
+          };
+        }
+      ]);
+    </script>
+  </body>
+</html>

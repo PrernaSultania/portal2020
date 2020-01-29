@@ -1,0 +1,10 @@
+117 + 18 + 26 = 161 convoke
+58 +18 + 18 = 94 ML
+16 + 18 = 34 Cloud 
+31 + 16 + 18 = 65 UI/UX 
+11 + 26 + 16 = 53 blockchain
+71 + 26 + 16 + 18 = 131 cyber
+18 ACombo1 Convoke'19, Machine Learning Workshop, Cloud Computing Workshop
+26 ACombo2 Convoke'19, Blockchain and Cryptocurrency Workshop, Cyber Security Workshop
+16 WCombo2 UI/UX Workshop, Blockchain and Cryptocurrency Workshop, Cyber Security Workshop
+18 WCombo1 UI/UX Workshop, Cyber Security Workshop, Machine Learning Workshop

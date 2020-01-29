@@ -1,0 +1,98 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"
+    ></script>
+    
+  </head>
+
+  <body>
+    <%- include partials/nav %>
+
+    <h1 align="center" class="title">Profile</h1>
+
+    <div class="card">
+      <table class="striped">
+        <tr>
+          <td>
+            <p><b>Name:</b></p>
+          </td>
+          <td><p><%= data.name %></p></td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>Email:</b></p>
+          </td>
+          <td><p><%= data.email %></p></td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>Gender:</b></p>
+          </td>
+          <td><p><%= data.gender %></p></td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>Contact:</b></p>
+          </td>
+          <td><p><%= data.contact %></p></td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>University: </b></p>
+          </td>
+          <td><p><%= data.university %></p></td>
+        </tr>
+        <% if(data.registration!=""){ %>
+        <tr>
+          <td>
+            <p><b>Registration NO.:</b></p>
+          </td>
+          <td><p><%= data.registration %></p></td>
+        </tr>
+        <% } %> <% if(data.room != "") { %>
+        <tr>
+          <td>
+            <p><b>Room:</b></p>
+          </td>
+          <td><p><%= data.room %></p></td>
+        </tr>
+        <% } %>
+
+      </table>
+      
+    </div>
+
+    <h6 class="center"><a style="color:#faa41a;" href="/user/resetpass">Reset Password?</a></h6>
+    <p class="message" style="color:green;font-size:16px;text-align:center;">
+      <%= message %>
+  </p>
+    <div>&nbsp;</div>
+  </body>
+</html>

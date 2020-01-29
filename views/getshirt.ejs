@@ -1,0 +1,97 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+
+    <style>
+    .container{
+        width:80%;
+        background-color: white;
+        /* overflow-x: scroll; */
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .innerContainer{
+        overflow-x: scroll;
+    }
+    th{
+        font-weight: bolder;
+        /* text-align: center; */
+    }
+    </style>
+
+</head>
+
+<body  ng-app="homeApp" ng-controller="myCtrl" ng-init="initialize(<%=JSON.stringify(data)%>)">
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+    
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+    <div class="container">
+
+            <div class="innerContainer">
+        <table class="striped">
+            <th>Name</th>
+            <th>Email</th>
+            <th>T-shirt</th>
+            <th>Gender</th>
+            <th>University</th>
+                <tr ng-repeat="detail in data">
+                    <td>{{detail.user.name}}</td>
+                    <td>{{detail.user.email}}</td>
+                    <td>{{detail.user.tShirtSize}}</td>
+                    <td>{{detail.user.gender}}</td>
+                    <td>{{detail.user.university}}</td>
+                </tr>
+        </table>
+
+	<button export-to-csv>Download</button>
+
+</div>
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <script src="jquery.tabletoCSV.js" type="text/javascript"></script> 
+    
+
+<script type="text/javascript">  
+          
+         const app = angular.module("homeApp", []);
+  app.controller("myCtrl", function($scope, $http) {
+
+    $scope.initialize = function(data) {
+      data = JSON.parse(JSON.stringify(data));
+      $scope.data = data;
+      console.log($scope.data[0]);
+    };
+
+  });
+    </script>
+
+</body>
+</html>

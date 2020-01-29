@@ -1,0 +1,240 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="ARCS Portal">
+    <meta name="author" content="Prerna Sultania">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+    </head>
+
+    <body>
+
+
+        <!-- =============================================================================== -->
+        <div class="cont" style="display:inline-block;">
+            <img src="/images/arcs.png" class="arcs">
+        </div>
+        
+        <div class="shape1-wrap">
+            <div class="shape1">
+                <div class="button1">
+                    <a href="/login"><img src="/images/Login Circle.png" class="img-fluid" id="img1"
+                            style="border-radius: 100%;border:none;height: 160px;width:160px;" /></a>
+                </div>
+                <div class="button2">
+                    <a href="#"><img src="/images/ARCS20 Circle.png" class="img-fluid" id="img2"
+                            style="border-radius: 100%;border:none;height: 190px;width:190px;" /></a>
+                </div>
+        </div>
+        </div>
+        <div class="shape2"></div>
+
+    <!-- ================================================================================ -->
+    
+    <form id="regForm" action="/register" method="POST" name="regForm" ng-app="myApp" ng-controller="formCtrl" novalidate>
+        <h1 class="text-center"><b>REGISTER</b></h1>
+
+        <div class="tab">
+            <input type="text" name="name" placeholder="Full Name" class="my-2">
+            <input type="password" name="password" placeholder="Password" class="my-2">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" class="my-2">
+            <input type="tel" name="contact" placeholder="Mobile Number" class="my-2">
+        </div>
+        <div class="tab">
+            <input placeholder="Gender" name="gender" type="text" class="my-2">
+            <input placeholder="Email" name="email" type="email" class="my-2">
+            <p>T-shirt Size</p>
+            <div class="control has-icons-left">
+              <label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XS"/> <span>XS</span></label>
+              &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="S"/> <span>S</span></label>
+              &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="M"/> <span>M</span></label>
+              &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="L"/> <span>L</span></label>
+              &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XL"/> <span>XL</span></label>
+              &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XXL"/> <span>XXL</span></label>
+            </div>
+        </div>
+        <div class="tab">
+            <label>
+                <input type="checkbox" id="check" ng-model="vit" ng-change="uniCheck(vit)"> <span>I'm from VIT Vellore</span>
+            </label>
+        <br>
+        <br>
+        <div class="field">
+            <label for="university" class="label" ng-class="{ 'danger' :regForm.university.$invalid && !regForm.university.$pristine,'success':regForm.university.$valid
+            && !regForm.university.$pristine}">University</label>
+            <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="SRM" name="university" ng-model="uni" required ng-class="{ 'is-danger' :regForm.university.$invalid && !regForm.university.$pristine,'is-success':regForm.university.$valid
+                && !regForm.university.$pristine}" ng-disabled="vit">
+                <span class="icon is-left">
+                    <i class="fas fa-university"></i>
+                </span>
+            </div>
+        </div>
+            <!-- Scope field (hidden) -->
+            <div class="field" ng-hide="true">
+                <label for="scope" class="label">Scope</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="scope" name="scope" required ng-model="scope">
+                </div>
+            </div>
+            <!-- Registration no. field -->
+            <div class="field" ng-show="vit">
+                <label for="registration" class="label" ng-class="{ 'danger' :regForm.registration.$invalid && !regForm.registration.$pristine,'success':regForm.registration.$valid &&
+                !regForm.registration.$pristine}">Registration Number</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="18BCE0000" name="registration" ng-model="reg" ng-pattern="/^1[2-8]{1}[A-Z]{3}[0-9]{4}$/i"
+                        ng-change="changeCase()"
+                        ng-class="{ 'is-danger' :regForm.registration.$invalid && !regForm.registration.$pristine,'is-success':regForm.registration.$valid && !regForm.registration.$pristine}"
+                        ng-required="!vit" ng-minlength="9">
+                </div>
+            </div>
+            <!-- Room field -->
+            <div class="field" ng-show="vit">
+                <label for="room" class="label">Room Number</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="A-210" name="room" ng-model="room" ng-required="!vit" ng-minlength="3">
+                </div>
+            </div>
+            <br>
+            <!-- Changes from Here-->
+            <!-- <div class="g-recaptcha" data-sitekey="6Lf96n8UAAAAAIPzsRSuQtoOldpI14e76_a3oz9g" data-size="invisible"
+            data-callback="setResponse"></div>
+                <input type="text" for="g-recaptcha-response" class="g-recaptcha-response" name="g-recaptcha-response" ng-hide="true"> -->
+            <!-- Changes Till Here-->
+            <!-- <div class="field" style="margin-top:3%">
+                <p class="control">
+                    <input type="submit" class="button is-info" value="Register" ng-click="load()" ng-disabled="regForm.name.$invalid || regForm.password.$invalid || regForm.confirmPassword.$invalid || regForm.email.$invalid || regForm.contact.$invalid
+                    || regForm.university.$invalid || ((vit || regForm.registration.$valid || regForm.room.$valid) && (!vit || regForm.registration.$invalid || regForm.room.$invalid))">
+                </p>
+            </div> -->
+
+        </div>
+
+        <div class="tab">
+            <div class="mt-5">
+                <p class="text-center"><b>Hi Prerna Sultania !!</b></p>
+                <p class="text-center"><b>Last Step..</b></p>
+            </div>
+            <div class="text-center">
+                <a href="#"><img src="/images/Register Buttton.png" class="img-fluid register"
+                        style="border-radius: 100%;border:none;" /></a>
+            </div>
+        </div>
+        <div style="overflow:auto;" class="mt-3">
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="my-4"
+                style="float: left">Back</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)" class="my-4"
+                style="float: right">Next</button>
+        </div>
+
+        <div style="text-align:center;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
+    </form>
+
+    <!-- ================================================================================================= -->
+    <!-- <div class="button1" style="margin-left: 1vh">
+        <a href="#"><img src="Login Circle.png" class="img-fluid" id="img1"
+                style="border-radius: 100%;border:none;height: 130px;width:130px;" /></a>
+    </div>
+    <div class="button2" style="margin-left: 1vh">
+        <a href="#"><img src="ARCS20 Circle.png" class="img-fluid" id="img2"
+                style="border-radius: 100%;border:none;height: 150px;width:150px;" /></a>
+    </div> -->
+
+
+
+        <!-- <div class="container">
+            <div class="d-inline">
+                <form id="regForm" action="#">
+                    <h1 class="text-center"><b>REGISTER</b></h1>
+
+                    <div class="tab">
+                        <input type="text" placeholder="Register Number" class="my-2">
+                        <input type="email" placeholder="Email ID" class="my-2">
+                        <input type="text" placeholder="Full Name" class="my-2">
+                        <input type="tel" placeholder="Mobile Number" class="my-2">
+                    </div>
+                    <div class="tab">
+                        <input placeholder="Password" type="password" class="my-2">
+                        <input placeholder="Confirm Password" type="password" class="my-2">
+                        <input placeholder="Gender" type="text" class="my-2">
+                        <input placeholder="Room Number" type="text" class="my-2">
+                    </div>
+                    <div class="tab">
+                        <div class="mt-5">
+                            <p class="text-center"><b>Hi Prerna Sultania !!</b></p>
+                            <p class="text-center"><b>Last Step..</b></p>
+                        </div>
+                        <div class="text-center">
+                            <a href="#"><img src="Register Buttton.png" class="img-fluid"
+                                    style="border-radius: 100%;border:none;" /></a>
+                        </div>
+                    </div>
+                    <div style="overflow:auto;" class="mt-3">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="my-4"
+                            style="float: left">Back</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="my-4"
+                            style="float: right">Next</button>
+                    </div>
+
+                    <div style="text-align:center;margin-top:40px;">
+                        <span class="step"></span>
+                        <span class="step"></span>
+                        <span class="step"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="d-inline">
+                <div class="row my-1" style="margin-left: 1vh">
+                    <a href="#"><img src="Login Circle.png" class="img-fluid" id="img1"
+                            style="border-radius: 100%;border:none;height: 130px;width:130px;" /></a>
+                </div>
+                <div class="row my-1" style="margin-left: 1vh">
+                    <a href="#"><img src="ARCS20 Circle.png" class="img-fluid" id="img2"
+                            style="border-radius: 100%;border:none;height: 150px;width:150px;" /></a>
+                </div>
+            </div>
+        </div> -->
+
+        <div style="display:inline-block;position:absolute;bottom: 20px;left: 20px;">
+            <span class="mx-2"><img src="/images/twitter.png" class="logos"></span>
+            <span class="mx-2"><img src="/images/facebook.png" class="logos"></span>
+            <span class="mx-2"><img src="/images/instagram.png" class="logos"></span>
+        </div>
+        <div style="display:inline-block;position:absolute;bottom: 20px;right: 20px;">
+            <img src="/images/IEEECS.png" class="logo1">
+        </div>
+
+        
+
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+        <script src="/js/form.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+            
+        <scrpit src="/js/register.js"></scrpit>
+
+</html>

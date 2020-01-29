@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GC Receipt</title>
+    <!-- CSS Links -->
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous"> -->
+    <!-- JS Links -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script src="/js/JsBarcode.all.min.js"></script>
+    <script src="/js/gcReceiptCtrl.js"></script>
+    <!-- JS files -->
+    <style>
+        body {
+            overflow-x:hidden;
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: 15px solid #363b5d;
+        }
+
+        #logo {
+            width: 100%;
+            /* background-color: palegreen; */
+            height: 100px;
+            text-align: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 25% 70%;
+            grid-gap: 10px;
+            /* background-color: #2196F3; */
+            padding: 10px;
+        }
+
+        .grid-container>div {
+            text-align: left;
+            margin-left: 40px;
+            font-size: 20px;
+        }
+
+        #events {
+            text-align: center;
+        }
+
+        #eventDet {
+            width: 100%;
+            padding: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #barcode {
+            height: 100px;
+        }
+
+        #arcs_logo {
+            width: 60px;
+            height: 60px;
+            margin-top: 15px;
+        }
+
+        #flex-container {
+            display: flex;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+        }
+
+        .flex-container>div {
+            background-color: #f1f1f1;
+            margin: 10px;
+            padding: 20px;
+            font-size: 30px;
+        }
+        .footer
+        {
+            display: flex;
+            padding:10px;
+        }
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="gcRecCtrl"  ng-init="initialize(<%=JSON.stringify(data)%>)">
+    <div id="logo">
+            <img id="arcs_logo" src="/images/arcs_logo.png" />
+    </div>
+    <div class="heading" style="margin:4%">
+        <h2 align="center">ARCS'19 External Participant Receipt</h2>
+    </div>
+    <div class="grid-container">
+        <div id="user">
+            <p style="margin-top:4%;">
+                <span>{{data[0].userId.name}}</span>
+                <br>
+                <span>{{data[0].userId.email}}</span>
+                <br>
+                <span>{{data[0].userId.contact}}</span>
+                <br>
+                <span>{{data[0].userId.university}}</span>
+            </p>
+        </div>
+        <div id="barcodeWrapper">
+            <svg id="barcode" style="margin:6%;">
+        </div>
+    </div>
+    <hr>
+    
+    <div id="events">
+        <h3>ACCOMODATION</h3>
+        <table id="eventDet">
+            <tr>
+                <th>Block</th>
+                <th>No. of Days</th>
+                <th>Payment Mode</th>
+                <th>Amount paid</th>
+
+            </tr>
+            <tr ng-repeat="p in data" ng-class="calc(p)">
+                <td>{{p.block}}</td>
+                <td >{{p.days}}</td>
+                <td>{{p.payment.mode}}</td>
+                <td>{{p.payment.amountPaid}}</td>
+            </tr>
+        </table>
+
+    </div>
+    <!-- <div class="row" style="margin:20px 20px">
+        <div class="col-xs-3" style="margin-top:10px">
+            <img src="/img/vit-logo.jpeg" width="100%" height="auto">
+
+        </div>
+        <div class="col-xs-3 col-xs-offset-6">
+            <img src="/img/ieee-logo.png" width="100%" height="auto">
+
+        </div>
+    </div> -->
+    <!-- <div id="barcodeWrapper" style="text-align:center;margin-top:30px;">
+        <svg id="barcode" style="margin:6%;">
+    </div> -->
+    <div class="footer" style="margin:10px;width:100%;">
+        <div style="width:18%;">
+            <img src="/images/blacklogo1.jpeg" width="100%" height="auto">
+        </div>  
+        <div style="width:18%;margin-left:60%;">
+            <img src="/images/blacklogo3.jpeg" width="100%" height="auto">
+        </div>
+    </div>
+    <script>
+        var body = document.querySelector('body');
+        body.addEventListener('dblclick', function () {
+            window.print();
+        })
+    </script>
+</body>
+
+</html>

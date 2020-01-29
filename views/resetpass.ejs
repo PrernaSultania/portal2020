@@ -1,0 +1,153 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="icon" href="/images/arcs_logo.png">
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="/js/register.js"></script>
+
+    <!-- Style -->
+    <style>
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: rgba(114, 114, 114, 0.849) !important;
+            opacity: 1 !important;
+            /* Firefox */
+        }
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: rgba(114, 114, 114, 0.849) !important;
+        }
+        ::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: rgba(114, 114, 114, 0.849) !important;
+        }
+        .notification {
+            padding: 0.6rem !important;
+        }
+        .danger {
+            color: hsl(348, 100%, 61%);
+        }
+        .success {
+            color: hsl(141, 53%, 43%);
+        }
+    </style>
+</head>
+
+<body style="height:100%; width: 100%;">
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+            <div>
+                    <a class="login" href="/logout"> Log Out</a>
+                  </div>
+
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+    
+    
+
+<section class="section">
+            <h1 align="center" class="title">Reset Password</h1>
+            <br>
+            <div class="card">
+            <!-- FORM -->
+            <form action="/user/resetpass" method="post" name="regForm" ng-app="myApp" ng-controller="formCtrl" novalidate>
+                <!-- Old Password -->
+                <div class="field">
+                    <label for="oldpassword" class="label">Old Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" placeholder="********" name="oldpassword" required autofocus ng-model="oldpassword">
+                        <span class="icon is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Password field -->
+                <div class="field">
+                    <label for="password" class="label" ng-class="{ 'danger' :regForm.password.$invalid && !regForm.password.$pristine,'success':regForm.password.$valid &&
+                    !regForm.password.$pristine }">New Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" placeholder="********" name="password" ng-model="pwd" required ng-change="pwdCheck()" ng-minlength="8" ng-class="{ 'is-danger' :regForm.password.$invalid && !regForm.password.$pristine,'is-success':regForm.password.$valid && !regForm.password.$pristine
+                        }">
+                        <span class="icon is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Password length error message -->
+                <div class="notification is-danger" ng-show="regForm.password.$invalid && !regForm.password.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Password should contain minimum
+                        <strong>8 characters</strong>
+                    </span>
+                </div>
+                <!-- Confirm Password field -->
+                <div class="field">
+                    <label for="confirmPassword" class="label" ng-class="{ 'danger' :regForm.confirmPassword.$invalid && !regForm.confirmPassword.$pristine,'success':regForm.confirmPassword.$valid
+                    && !regForm.confirmPassword.$pristine}">Confirm New Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" placeholder="********" name="confirmPassword" ng-model="conPwd" required ng-change="pwdCheck()" ng-minlength="6"
+                            ng-class="{ 'is-danger' :regForm.confirmPassword.$invalid && !regForm.confirmPassword.$pristine,'is-success':regForm.confirmPassword.$valid &&
+                        !regForm.confirmPassword.$pristine}">
+                        <span class="icon is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Password match success message -->
+                <div class="notification is-success" ng-show="pwdVal">
+                    <span>
+                        <i class="fas fa-check-circle"></i>
+                        <strong> {{message}}</strong>
+                    </span>
+                </div>
+                <!-- Password match errormessage -->
+                <div class="notification is-danger" ng-show="!pwdVal && !regForm.password.$pristine && !regForm.confirmPassword.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Passwords
+                        <strong>do not</strong> match
+                    </span>
+                </div>
+                <br>
+                <div class="field" style="margin-top:3%">
+                    <p class="control">
+                        <input type="submit" class="button is-info" value="Reset Password" ng-click="load()" ng-disabled="regForm.name.$invalid || regForm.password.$invalid || regForm.confirmPassword.$invalid || regForm.email.$invalid || regForm.contact.$invalid
+                        || regForm.university.$invalid || ((vit || regForm.registration.$valid || regForm.room.$valid) && (!vit || regForm.registration.$invalid || regForm.room.$invalid))">
+                    </p>
+                </div>
+                <p style="color:red;font-size:13px;text-align:center;">
+                    <%= message %>
+                  </p>
+            </form>
+        </div>
+</section>
+        
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <hr>
+
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="/js/admincount.js"></script>
+
+
+    <style>
+    .container{
+        width:50%;
+        background-color: white;
+        /* overflow-x: scroll; */
+        padding: 30px;
+        border-radius: 20px;
+        /* overflow-y:scroll; */
+    }
+    .innerContainer{
+        overflow-x: scroll;
+    }
+    @media(max-width:1228px){
+        .container{
+            width: 70%;
+        }
+        #count{
+            text-align: center;
+        }
+    }
+    @media(max-width:708px){
+        .container{
+            width: 90%;
+        }
+    }
+    th{
+        font-weight: bolder;
+    }
+    </style>
+
+</head>
+
+<body ng-app="homeApp" ng-controller="eventCtrl" ng-init="initialize(<%=JSON.stringify(data)%>)">
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+            <div>
+                    <a class="logout" href="/logout"> Logout</a>
+                  </div>
+                
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <h3 align="center" class="title">Individual Event Count</h3>
+        <%- include partials/adminnav %>
+    <div class="container">
+        <div class="innerContainer">
+        <table class="striped">
+            <th>Event Name</th>
+            <th id="count">Registration Count</th>
+            <th>Total</th>
+
+            <tr ng-repeat="x in data" ng-if="comboId.indexOf(x._id)==-1">
+                <td>{{x.name}}</td>
+                <td>{{x.registeredCount}}</td>
+                <td>{{x.added}}</td>
+            </tr>
+
+            <!-- <% data.forEach(function(detail){ %>
+                <tr>
+                    <td><%= detail["name"] %></td>
+                    <td id="count"><%= detail["registeredCount"] %></td>
+                </tr>
+                <% }); %> -->
+        </table>
+    </div>
+
+    </div>
+
+    <h3 align="center" class="title">Combo Count</h3>
+    <div class="container">
+        <div class="innerContainer">
+        <table class="striped">
+            <th>Combo Name</th>
+            <th id="count">Registration Count</th>
+
+            <tr ng-repeat="x in data" ng-class="comboEvent(x)" ng-if="comboId.indexOf(x._id)!=-1">
+                <td>{{x.name}}</td>
+                <td>{{x.registeredCount}}</td>
+            </tr>
+
+            <!-- <% data.forEach(function(detail){ %>
+                <tr>
+                    <td><%= detail["name"] %></td>
+                    <td id="count"><%= detail["registeredCount"] %></td>
+                </tr>
+                <% }); %> -->
+        </table>
+    </div>
+
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+</body>
+</html>

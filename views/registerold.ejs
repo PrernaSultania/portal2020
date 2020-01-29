@@ -1,0 +1,320 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="icon" href="/images/arcs_logo.png">
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="/js/register.js"></script>
+
+    <!-- Style -->
+    <style>
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: rgba(114, 114, 114, 0.849) !important;
+            opacity: 1 !important;
+            /* Firefox */
+        }
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: rgba(114, 114, 114, 0.849) !important;
+        }
+        ::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: rgba(114, 114, 114, 0.849) !important;
+        }
+        .notification {
+            padding: 0.6rem !important;
+        }
+        .danger {
+            color: hsl(348, 100%, 61%);
+        }
+        .success {
+            color: hsl(141, 53%, 43%);
+        }
+    </style>
+</head>
+
+<body>
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+            <div>
+                    <a class="login" href="/login"> Log In</a>
+                  </div>
+
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+    
+
+<section class="section">
+            <h1 align="center" class="title">Create Account</h1>
+            <br>
+            <div class="card">
+            <!-- FORM -->
+            <form action="/register" method="post" name="regForm" ng-app="myApp" ng-controller="formCtrl" novalidate>
+                <!-- Name field -->
+                <div class="field">
+                    <label for="name" class="label" ng-class="{ 'danger' :regForm.name.$invalid && !regForm.name.$pristine,'success':regForm.name.$valid && !regForm.name.$pristine }">Name</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" placeholder="John Doe" name="name" required autofocus ng-model="name" ng-pattern="/^[a-z ,.'-]+$/i" ng-change="trimmer(name)"
+                            ng-class="{ 'is-danger' :regForm.name.$invalid && !regForm.name.$pristine,'is-success':regForm.name.$valid && !regForm.name.$pristine }">
+                        <span class="icon is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Name error message -->
+                <div class="notification is-danger" ng-show="regForm.name.$invalid && !regForm.name.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Name should contain
+                        <strong>only</strong> letters
+                    </span>
+                </div>
+                <!-- Password field -->
+                <div class="field">
+                    <label for="password" class="label" ng-class="{ 'danger' :regForm.password.$invalid && !regForm.password.$pristine,'success':regForm.password.$valid &&
+                    !regForm.password.$pristine }">Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" name="password" ng-model="pwd" required ng-change="pwdCheck()" ng-minlength="8" ng-class="{ 'is-danger' :regForm.password.$invalid && !regForm.password.$pristine,'is-success':regForm.password.$valid && !regForm.password.$pristine
+                        }">
+                        <span class="icon is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Password length error message -->
+                <div class="notification is-danger" ng-show="regForm.password.$invalid && !regForm.password.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Password should contain minimum
+                        <strong>8 characters</strong>
+                    </span>
+                </div>
+                <!-- Confirm Password field -->
+                <div class="field">
+                    <label for="confirmPassword" class="label" ng-class="{ 'danger' :regForm.confirmPassword.$invalid && !regForm.confirmPassword.$pristine,'success':regForm.confirmPassword.$valid
+                    && !regForm.confirmPassword.$pristine}">Confirm Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" name="confirmPassword" ng-model="conPwd" required ng-change="pwdCheck()" ng-minlength="6"
+                            ng-class="{ 'is-danger' :regForm.confirmPassword.$invalid && !regForm.confirmPassword.$pristine,'is-success':regForm.confirmPassword.$valid &&
+                        !regForm.confirmPassword.$pristine}">
+                        <span class="icon is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Password match success message -->
+                <div class="notification is-success" ng-show="pwdVal">
+                    <span>
+                        <i class="fas fa-check-circle"></i>
+                        <strong> {{message}}</strong>
+                    </span>
+                </div>
+                <!-- Password match errormessage -->
+                <div class="notification is-danger" ng-show="!pwdVal && !regForm.password.$pristine && !regForm.confirmPassword.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Passwords
+                        <strong>do not</strong> match
+                    </span>
+                </div>
+                <!-- Gender field -->
+                <div class="field">
+                    <label for="gender" class="label">Gender</label>
+                    <div class="control">
+                        <div class="select is-primary">
+                            <select name="gender">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Email field -->
+                <div class="field">
+                    <label for="email" class="label" ng-class="{ 'danger' :regForm.email.$invalid && !regForm.email.$pristine,'success':regForm.email.$valid
+                    && !regForm.email.$pristine}">Email</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="email" placeholder="abc@xyz.com" name="email" ng-model="email" required ng-class="{ 'is-danger' :regForm.email.$invalid && !regForm.email.$pristine,'is-success':regForm.email.$valid
+                        && !regForm.email.$pristine}">
+                        <span class="icon is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Email error message -->
+                <div class="notification is-danger" ng-show="regForm.email.$invalid && !regForm.email.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        <strong>Invalid Email</strong>
+                    </span>
+                </div>
+                <!-- Contact field -->
+                <div class="field">
+                    <label for="contact" class="label" ng-class="{ 'danger' :regForm.contact.$invalid && !regForm.contact.$pristine,'success':regForm.contact.$valid
+                    && !regForm.contact.$pristine}">Contact Number</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="tel" placeholder="0123456789" name="contact" required ng-maxlength="10" ng-minlength="10" ng-model="contact"
+                            ng-pattern="/^[0-9]+$/i" ng-class="{ 'is-danger' :regForm.contact.$invalid && !regForm.contact.$pristine,'is-success':regForm.contact.$valid
+                        && !regForm.contact.$pristine}">
+                        <span class="icon is-left">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Contact error message -->
+                <div class="notification is-danger" ng-show="regForm.contact.$invalid && !regForm.contact.$pristine">
+                    <span>
+                        <i class="fas fa-times-circle"></i>
+                        Contact no. should contain only
+                        <strong>10 digits</strong>
+                    </span>
+                </div>
+
+                
+                
+              <!-- Tshirt field -->
+                <div class="field">
+                    <label for="tShirtSize" class="label" ng-class="{ 'danger' :regForm.tShirtSize.$invalid && !regForm.tShirtSize.$pristine,'success':regForm.contact.$valid
+                    && !regForm.tShirtSize.$pristine}">T-Shirt Size</label>
+                    <div class="control has-icons-left">
+                        <label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XS"/> <span>XS</span></label>
+                      &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="S"/> <span>S</span></label>
+                      &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="M"/> <span>M</span></label>
+                      &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="L"/> <span>L</span></label>
+                      &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XL"/> <span>XL</span></label>
+                      &nbsp;&nbsp;<label><input class="with-gap" type="radio" name="tShirtSize" required ng-model="tShirtSize" id="tShirtSize" value="XXL"/> <span>XXL</span></label>
+                    </div>
+                </div>
+                
+                <hr>
+              
+                <!-- IEEE Member Section -->
+                
+                <label>
+                    <input type="checkbox" id="ieee" ng-model="ieee" ng-change="ieeeCheck(ieee)"> <span>I have an IEEE Membership</span>
+                </label><br>
+                <!-- IEEE Membership No. -->
+                <div class="field" ng-hide="!ieee">
+                        <br>
+                    <label for="memberNo" class="label" ng-class="{ 'danger' :regForm.memberNo.$invalid && !regForm.memberNo.$pristine,'success':regForm.memberNo.$valid && !regForm.memberNo.$pristine}">IEEE Membership Number</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Member number" name="memberNo" ng-model="memNo"  ng-class="{ 'is-danger' :regForm.memberNo.$invalid && !regForm.memberNo.$pristine,'is-success':regForm.memberNo.$valid && !regForm.memberNo.$pristine}" ng-pattern="/^[0-9]{0,20}$/">
+                        <span class="icon is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- IEEE Section -->
+                <div class="field" ng-hide="!ieee">
+                    <label for="section" class="label" ng-class="{ 'danger' :regForm.section.$invalid && !regForm.section.$pristine,'success':regForm.section.$valid && !regForm.section.$pristine}">IEEE Section</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Madras" name="section" ng-model="section" ng-class="{ 'is-danger' :regForm.section.$invalid && !regForm.section.$pristine,'is-success':regForm.section.$valid && !regForm.section.$pristine}">
+                        <span class="icon is-left">
+                            <i class="fas fa-map-marker"></i>
+                        </span>
+                    </div>
+                </div><br>
+                 <!-- Check box (VIT Student) -->
+                 <label>
+                        <input type="checkbox" id="check" ng-model="vit" ng-change="uniCheck(vit)"> <span>I'm from VIT Vellore</span>
+                    </label>
+                <br>
+                <br>
+                <!-- University field -->
+                <div class="field">
+                    <label for="university" class="label" ng-class="{ 'danger' :regForm.university.$invalid && !regForm.university.$pristine,'success':regForm.university.$valid
+                    && !regForm.university.$pristine}">University</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" placeholder="SRM" name="university" ng-model="uni" required ng-class="{ 'is-danger' :regForm.university.$invalid && !regForm.university.$pristine,'is-success':regForm.university.$valid
+                        && !regForm.university.$pristine}" ng-disabled="vit">
+                        <span class="icon is-left">
+                            <i class="fas fa-university"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Scope field (hidden) -->
+                <div class="field" ng-hide="true">
+                    <label for="scope" class="label">Scope</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="scope" name="scope" required ng-model="scope">
+                    </div>
+                </div>
+                <!-- Registration no. field -->
+                <div class="field" ng-show="vit">
+                    <label for="registration" class="label" ng-class="{ 'danger' :regForm.registration.$invalid && !regForm.registration.$pristine,'success':regForm.registration.$valid &&
+                    !regForm.registration.$pristine}">Registration Number</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="18BCE0000" name="registration" ng-model="reg" ng-pattern="/^1[2-8]{1}[A-Z]{3}[0-9]{4}$/i"
+                            ng-change="changeCase()"
+                            ng-class="{ 'is-danger' :regForm.registration.$invalid && !regForm.registration.$pristine,'is-success':regForm.registration.$valid && !regForm.registration.$pristine}"
+                            ng-required="!vit" ng-minlength="9">
+                    </div>
+                </div>
+                <!-- Room field -->
+                <div class="field" ng-show="vit">
+                    <label for="room" class="label">Room Number</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="A-210" name="room" ng-model="room" ng-required="!vit" ng-minlength="3">
+                    </div>
+                </div>
+                <br>
+                <!-- Changes from Here-->
+                <div class="g-recaptcha" data-sitekey="6Lf96n8UAAAAAIPzsRSuQtoOldpI14e76_a3oz9g" data-size="invisible"
+                data-callback="setResponse"></div>
+                    <input type="text" for="g-recaptcha-response" class="g-recaptcha-response" name="g-recaptcha-response" ng-hide="true">
+                <!-- Changes Till Here-->
+                <div class="field" style="margin-top:3%">
+                    <p class="control">
+                        <input type="submit" class="button is-info" value="Register" ng-click="load()" ng-disabled="regForm.name.$invalid || regForm.password.$invalid || regForm.confirmPassword.$invalid || regForm.email.$invalid || regForm.contact.$invalid
+                        || regForm.university.$invalid || ((vit || regForm.registration.$valid || regForm.room.$valid) && (!vit || regForm.registration.$invalid || regForm.room.$invalid))">
+                    </p>
+                </div>
+                <p style="color:red;font-size:13px;text-align:center;">
+                    <%= message %>
+                  </p>
+            </form>
+        </div>
+</section>
+        
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <hr>
+
+<script></script>
+
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+  <script>
+    var onloadCallback = function () {
+      grecaptcha.execute();
+    };
+    function setResponse(response) {
+        document.querySelector(".g-recaptcha-response").value= response;
+        console.log(document.querySelector(".g-recaptcha-response").value);
+    }
+  </script>
+
+
+</body>
+</html>

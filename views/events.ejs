@@ -1,0 +1,362 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="ARCS Portal">
+        <meta name="author" content="Prerna Sultania">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="events.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+    <body style="background-color:#333333;" 
+    ng-app="homeApp"
+    ng-controller="eventCtrl"
+    ng-init="initialize(<%=JSON.stringify(data)%>)">
+        <!-- <div class="shape3-wrap"> -->
+            <div class="cont" style="float:left;">
+                <img src="/images/arcs.png" class="arcs">
+            </div>
+            <div class="shape3">
+                
+
+                <div class="tabs" style="float:left; padding-left:100px; padding-top:30px;">
+                    <span>
+                        <button
+                        style="background-color: #333333; color: #faa41a;"
+                          class="btn waves-effect waves-light"
+                          type="submit"
+                          name="action"
+                          value="profile"
+                          onclick="add(this)"
+                        >
+                          PROFILE
+                        </button>
+                    </span>
+                    <span>
+                        <button
+                        style="background-color: #333333; color: #faa41a;"
+                        class="btn waves-effect waves-light"
+                        type="submit"
+                        name="action"
+                        value="events"
+                        onclick="add(this)"
+                    >
+                      EVENTS
+                        </button>
+                    </span>
+                    <span>
+                        <button
+                        style="background-color: #333333; color: #faa41a;"
+                        class="btn waves-effect waves-light"
+                        type="submit"
+                        name="action"
+                        value="receipts"
+                        onclick="add(this)"
+                    >
+                      RECEIPTS
+                    </button>
+                    </span>
+                    <span>
+                        <button
+                        style="background-color: #333333; color: #faa41a;"
+                        class="btn waves-effect waves-light"
+                        type="submit"
+                        name="action"
+                        value="change pwd"
+                        onclick="add(this)"
+                    >
+                      CHANGE PWD?
+                    </button>
+                    </span>
+                    </div>
+            </div>
+        <!-- </div> -->
+        <div>
+            <img src="IEEECS.png" class="logo">
+        </div>
+        
+  <!-- <br> -->
+    <!-- <div ng-init="initialize1(<%=JSON.stringify(user)%>)"></div>
+    <%- include partials/nav %>
+    <div>&nbsp;</div>
+    <div class="myrow">
+    <h4>Individual Events</h4><br>  
+    </div> -->
+
+    <!-- -------------------------------------------INDIVIDUAL EVENTS--------------------------------------------- -->
+    <div class="flex-container">
+      <div
+        class="mycolumn"
+        ng-repeat="event in individualEvent"
+        ng-hide="blockedEvents.includes(event._id)"
+      >
+        <div class="card">
+          <h3 class="eventname" >{{ event.name }}</h3>
+          <hr />
+          <div class="content">
+            <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+            <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+            <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+            <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<br>
+                <span style="color:red;"><b> Early Bird</b></p>
+            <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+          </div>
+
+          <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+            <a
+              href=""
+              class="btn buttoncontent"
+              ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+              ng-click="select(event)"
+              ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+              >{{ regState }}</a
+            >
+          </div>
+          <div class="cardbutton center card-action" ng-if="isFull(event._id)" style="text-align: center;">
+            <!-- <a href="" class="btn disabled">Full</a> -->
+            <button
+            style="background-color: #333333; color: #faa41a;"
+            class="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+            value="change pwd"
+            onclick="add(this)"
+        >
+          SELECT
+        </button>
+          </div>
+          
+        </div>
+        
+    </div>
+
+    <div
+        class="mycolumn"
+        ng-repeat="event in individualEvent"
+        ng-hide="blockedEvents.includes(event._id)"
+      >
+        <div class="card">
+          <h3 class="eventname">{{ event.name }}</h3>
+          <hr />
+          <div class="content">
+            <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+            <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+            <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+            <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<b> (Early Bird)</b></p>
+            <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+          </div>
+
+          <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+            <a
+              href=""
+              class="btn buttoncontent"
+              ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+              ng-click="select(event)"
+              ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+              >{{ regState }}</a
+            >
+          </div>
+          <div class="cardbutton center card-action" ng-if="isFull(event._id)" style="text-align: center;">
+            <!-- <a href="" class="btn disabled">Full</a> -->
+            <button
+            style="background-color: #333333; color: #faa41a;"
+            class="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+            value="change pwd"
+            onclick="add(this)"
+        >
+          SELECT
+        </button>
+          </div>
+          
+        </div>
+        
+    </div><div
+    class="mycolumn"
+    ng-repeat="event in individualEvent"
+    ng-hide="blockedEvents.includes(event._id)"
+  >
+    <div class="card">
+      <h3 class="eventname">{{ event.name }}</h3>
+      <hr />
+      <div class="content">
+        <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+        <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+        <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+        <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<b> (Early Bird)</b></p>
+        <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+      </div>
+
+      <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+        <a
+          href=""
+          class="btn buttoncontent"
+          ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+          ng-click="select(event)"
+          ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+          >{{ regState }}</a
+        >
+      </div>
+      <div class="cardbutton center card-action" ng-if="isFull(event._id)" style="text-align: center;">
+        <!-- <a href="" class="btn disabled">Full</a> -->
+        <button
+        style="background-color: #333333; color: #faa41a;"
+        class="btn waves-effect waves-light"
+        type="submit"
+        name="action"
+        value="change pwd"
+        onclick="add(this)"
+    >
+      SELECT
+    </button>
+      </div>
+      
+    </div>
+    
+</div><div
+class="mycolumn"
+ng-repeat="event in individualEvent"
+ng-hide="blockedEvents.includes(event._id)"
+>
+<div class="card">
+  <h3 class="eventname">{{ event.name }}</h3>
+  <hr />
+  <div class="content">
+    <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+    <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+    <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+    <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<br>
+        <span style="color:red;"><b> Early Bird</b></span></p>
+    <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+  </div>
+
+  <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+    <a
+      href=""
+      class="btn buttoncontent"
+      ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+      ng-click="select(event)"
+      ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+      >{{ regState }}</a
+    >
+  </div>
+  <div class="cardbutton center card-action" ng-if="isFull(event._id)" style="text-align: center;">
+    <!-- <a href="" class="btn disabled">Full</a> -->
+    <button
+    style="background-color: #333333; color: #faa41a;"
+    class="btn waves-effect waves-light"
+    type="submit"
+    name="action"
+    value="change pwd"
+    onclick="add(this)"
+>
+  SELECT
+</button>
+  </div>
+  
+</div>
+
+</div>
+<div
+        class="mycolumn"
+        ng-repeat="event in individualEvent"
+        ng-hide="blockedEvents.includes(event._id)"
+      >
+        <div class="card">
+          <h3 class="eventname">{{ event.name }}</h3>
+          <hr />
+          <div class="content">
+            <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+            <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+            <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+            <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<b> (Early Bird)</b></p>
+            <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+          </div>
+
+          <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+            <a
+              href=""
+              class="btn buttoncontent"
+              ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+              ng-click="select(event)"
+              ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+              >{{ regState }}</a
+            >
+          </div>
+          <div class="cardbutton center card-action" ng-if="isFull(event._id)" style="text-align: center;">
+            <!-- <a href="" class="btn disabled">Full</a> -->
+            <button
+            style="background-color: #333333; color: #faa41a;"
+            class="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+            value="change pwd"
+            onclick="add(this)"
+        >
+          SELECT
+        </button>
+          </div>
+          
+        </div>
+        
+    </div>
+    <div
+    class="mycolumn"
+    ng-repeat="event in individualEvent"
+    ng-hide="blockedEvents.includes(event._id)"
+  >
+    <div class="card">
+      <h3 class="eventname">{{ event.name }}</h3>
+      <hr />
+      <div class="content">
+        <p class="eventdescription" ng-if="!isCombo(event)">{{event.description}}</p>
+        <p class="eventschedule"><b>Date: </b>{{ event.schedule }}.</p>
+        <p class="eventfee" ng-if="isRegular(event)"><b>Fee: </b>Rs. {{ event.feeDetail.regular }}</p>
+        <p class="eventfee" ng-if="isEarly(event)"><b>Fee: </b><strike>Rs. {{event.feeDetail.regular}}</strike> Rs. {{ event.feeDetail.early }}<b> (Early Bird)</b></p>
+        <p class="eventfee" ng-if="isLate(event)"><b>Fee: </b>Rs. {{ event.feeDetail.late }}</p>
+      </div>
+
+      <div class="cardbutton center card-action" ng-if="!isFull(event._id)">
+        <a
+          href=""
+          class="btn buttoncontent"
+          ng-class="blockedEvents.lastIndexOf(event._id) != -1 ? 'disabled' :(regEvents.lastIndexOf(event._id) != -1 ? 'selected' : 'unselected')"
+          ng-click="select(event)"
+          ng-if="regState = regEvents.lastIndexOf(event._id) != -1 ?'Added' : 'Add To Cart'"
+          >{{ regState }}</a
+        >
+      </div>
+      <div class="cardbutton center card-action" ng-if="isFull(event._id)"style="text-align: center;">
+        <!-- <a href="" class="btn disabled">Full</a> -->
+        <button
+        style="background-color: #333333; color: #faa41a;"
+        class="btn waves-effect waves-light"
+        type="submit"
+        name="action"
+        value="change pwd"
+        onclick="add(this)"
+    >
+      SELECT
+    </button>
+      </div>
+      
+    </div>
+    
+</div>
+    
+    </div>
+    <div class="text" style="text-align:center;">
+        <p style="color: #ffffff;">Total:1000
+            <br>
+            <span style="color: red;">lorem lorem lorem loremlorem ipsum</span>
+        </p>
+    </div>
+    <div style="text-align: center;">
+        <a href="#"><img src="Registerorange.png" class="register"></a>
+    </div>
+    </body>
+    <script src="events.js"></script>
+</html>

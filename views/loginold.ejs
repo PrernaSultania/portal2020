@@ -1,0 +1,190 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/images/arcs_logo.png">
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        ::placeholder { 
+        color: grey;
+        opacity: 1; 
+        }
+
+        *{padding:0;margin:0;}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:20px;
+	right:10px;
+	background-color:#faa41a;
+	color:#202020;
+	border-radius:50px;
+	text-align:center;
+  box-shadow: 2px 2px 3px rgb(41, 29, 29);
+  transition: 1s;
+}
+.float:hover{
+  /* background-color:black;
+  color: #202020; */
+  height: 250px;
+  width: 420px;
+}
+#name{
+    color:#202020;
+    font-size: 18px;
+}
+@media(max-width:440px){
+    .float:hover{
+        height: 260px;
+        /* width: 310px; */
+        width: 95%;
+    }
+    #name{
+        font-size: 17px;
+    }
+}
+.my-float{
+	margin-top:22px;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+    <div class="myrow row">
+
+
+<div data-aos="fade-down"
+data-aos-easing="linear"
+data-aos-duration="700">
+
+
+
+        <div class="column1 col s12 m6">
+            <div class="mycard2">
+            <img id="eventlogo" src="/images/arcs_logo.png">
+            <h2 id="ARCS">
+                <b>ARCS'19</b>
+            </h2>
+            <p id="register"> Haven't registered... Click
+                <a href="/register" class="linkcolor">here</a>
+            </p>
+        </div>
+        </div>
+
+</div>
+
+<div data-aos="fade-down"
+data-aos-easing="linear"
+data-aos-duration="700">
+
+
+        <div class="column2 col s12 m6 ">
+            <div class="mycard">
+                <form action="/login" method="POST">
+                    <h4 class="form-heading">Login</h4>
+                    <ul class="">
+                        <li class="input-field">
+                                <label for="email"></label>
+                                <input placeholder="Email ID" class="validate" id="email" type="email" name="email" required >
+                        </li>
+                        <li class="input-field">
+                            <label for="pwd"></label>
+                            <input id="pwd" placeholder="Password" class="validate" type="password" name="password" required />
+                        </li>
+                        <p class="message" style="color:red;font-size:13px;text-align:center;">
+                            <%= message %>
+                        </p>
+                       
+                        <div>&nbsp;</div>
+                        <li>
+                            <button type="submit" class="waves-effect waves btn btncolor" value="Submit">
+                                Sign In
+                            </button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+        </div>
+</div> <!-- End of the AOS-->
+
+
+    </div>
+    </div>
+
+    <div class="float">
+        <i id="arrow"class="fa fa-arrow-up fa-1g my-float"></i>
+        <div class="dev_content center" hidden>
+            <div>&nbsp;</div>    
+            <!-- <div>&nbsp;</div> -->
+        <p id="name" >Priyansh Jain (Mentor)&nbsp;<a href="https://github.com/Presto412"><img src="/images/Octocat.png" style="height:30px;width:30px;"></a>&nbsp;<a href="https://www.linkedin.com/in/priyanshjain412/"><img src="/images/linkedin-logo.svg" style="height:20px;width:20px;"></a></p><br>
+        <p id="name" >Akash S Reddy (Developer)&nbsp;<a href="https://github.com/AkashSReddy"><img src="/images/Octocat.png" style="height:30px;width:30px;"></a>&nbsp;<a href="https://www.linkedin.com/in/akashsreddy/"><img src="/images/linkedin-logo.svg" style="height:20px;width:20px;"></a></p><br>
+        <p id="name" >Rajvardhan Deshmukh (Developer)&nbsp;<a href="https://github.com/RajDeshmukh99"><img src="/images/Octocat.png" style="height:30px;width:30px;"></a>&nbsp;<a href="https://www.linkedin.com/in/rajvardhan-deshmukh-198883157/"><img src="/images/linkedin-logo.svg" style="height:20px;width:20px;"></a></p><br>
+    </div>
+</div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="text/javascript">
+        function showAndroidToast(toast) {
+            Android.showToast(toast);
+        }
+
+        $(document).ready(function(){
+            $('.float').hover(mouseenter, mouseleave);
+            function mouseenter() {
+                $("#arrow").css({'transform': 'rotate(-180deg)'});
+                $('.dev_content').delay(500).fadeIn();
+            };
+            function mouseleave() {
+                $("#arrow").css({'transform': 'rotate(0)'});
+                $('.dev_content').hide();
+            };
+        });
+    </script>
+<script>
+AOS.init();
+$('button').click(function(){
+
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if($('#pwd').val()!="" && re.test($("#email").val())){
+    $(this).animate({width:'0'})
+    $('.mycard').animate({height:'5px'},500)
+    $('.mycard').animate({width:'5px'},1500)
+    $('form').hide()
+    $('mycard').hide()
+    $('.mycard2').animate({height:'5px'},500)
+    $('#eventlogo').fadeOut()
+    $('#ARCS').fadeOut()
+    $('#register').fadeOut()
+    }
+
+})
+
+</script>
+
+</body>
+
+</html>

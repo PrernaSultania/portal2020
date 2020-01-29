@@ -1,0 +1,139 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"
+    ></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="/js/gc.js"></script>
+    <style>
+    .bar{
+      width:50%;
+      margin:auto;
+    }
+      @media(max-width:1000px)
+      {
+        .bar{
+          width:80%;
+        }
+        .box{
+          width:80%;
+        }
+      }
+      @media(max-width:640px){
+        .box{
+          width:100%;
+        }
+      }
+      @media(max-width:340px){
+        .card{
+          width:90% !important;
+          margin: auto;
+        }
+      }
+    input{
+      color: white;
+      cursor: pointer;
+    }
+    .searchContent{
+      color: #202020;
+      cursor: pointer;
+      padding: 2%;
+    }
+    .searchContent:hover{
+      background-color: #dcdcdc;
+    }
+    ::placeholder{
+      color: white;
+    }
+    .box{
+      background-color: white;
+      padding:2%;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      margin: auto;
+    }
+    .box2{
+      background-color: white;
+      padding: 2%;
+      width: 60%;
+      border-radius: 20px;
+    }
+
+    </style>
+  </head>
+
+  <body>
+    
+    <link rel="icon" href="/images/arcs_logo.png">
+    <div class="shape overlay">
+        <img id="eventlogo" src="/images/arcs_logo.png" />
+      </div>
+      <div>
+        <a class="logout" href="/logout"> Logout</a>
+      </div>
+    
+      <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png" />
+      </div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+
+    <h1 align="center" class="title">Welcome to ARCS'19 Admin</h1>
+    <div>&nbsp;</div>
+
+        <%- include partials/adminnav %>
+        <div>&nbsp;</div>
+
+        <%- include partials/searchbar %>
+
+  </div>
+
+
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script>      
+      
+      $(document).ready(function(){
+    $('.select1').formSelect();
+  });
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+          
+    </script>
+  </body>
+</html>

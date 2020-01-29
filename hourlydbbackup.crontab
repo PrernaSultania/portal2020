@@ -1,0 +1,2 @@
+0 * * * * mongodump -h localhost -p 27017 -d arcs-2019 -c receipts -o ~/backups/receipts-$(echo $(date -Iseconds))
+0 * * * * mongodump -h localhost -p 27017 -d arcs-2019 -c users -o ~/backups/users-$(echo $(date -Iseconds))

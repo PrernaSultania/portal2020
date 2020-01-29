@@ -1,0 +1,48 @@
+body{
+    overflow-y:hidden; 
+    background-attachment: fixed;
+}
+.mycontainer1{
+    -webkit-clip-path: circle(50% at 50% 64%);
+    clip-path: circle(50% at 50% 64%);
+height: 500px;
+width: 600px;
+margin:auto;
+
+}
+.mycontainer2{
+height: 400px;
+/* width: 600px; */
+margin:auto;
+
+}
+
+h3{
+    color: white;
+    margin: auto;
+    text-align: center;
+    font-size: 70px;
+}
+#warning{
+    width: 600px;
+    height: 500px;
+}
+
+@media(max-width:686px){
+    #warning{
+        width:300px;
+        height: 250px;
+    }
+    .mycontainer1{
+        width:300px;
+        height:270px;
+    }
+    h3{
+        font-size:50px;
+    }
+}
+@media(max-width:442px){
+    h3{
+        font-size: 30px;
+    }
+}

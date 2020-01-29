@@ -1,0 +1,63 @@
+
+    <script src="/js/participantsearch.js"></script>
+    <div ng-app="homeApp" ng-controller="myCtrl" ng-init="initialize(<%=JSON.stringify(data)%>)">
+      <div class="bar" ng-mouseleave="test()">
+        <input type="text" class="search" ng-model="searchString"   ng-click="visible()" ng-mouseover="show = true"   placeholder="Search for a Participant"/>
+        <ul class="data-ctrl" >
+            <div class="box" ng-if="searchString" ng-cloak ng-show="show" ng-mouseleave="test()">
+                <i class="fa fa-window-close right" ng-click="invisible()" aria-hidden="true" ></i>
+          <li ng-repeat="i in data | filter:searchString" >
+                <p class="searchContent" ng-click="info(i)"><b>Name:</b> {{i.name}} <b ng-if="i.registration">, Registration: </b>{{i.registration}}</p>
+          </li>
+        </ul>
+      </div> 
+      <div class="card" ng-cloak ng-show="work" ng-if="searchString">
+          <!-- <p>Printing Stuff here</p> -->
+          <h5 class="center" ng-if="!message.data.user">No Results Found</h5>
+          <table class="striped" ng-if="message.data.user">
+              <tr>
+                <td>
+                  <p><b>Name:</b></p>
+                </td>
+                <td><p>{{message.data.user}}</p></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><b>Email:</b></p>
+                </td>
+                <td><p>{{message.data.email}}</p></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><b>Gender:</b></p>
+                </td>
+                <td><p>{{message.data.gender}}</p></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><b>Contact:</b></p>
+                </td>
+                <td><p>{{message.data.contact}}</p></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><b>University: </b></p>
+                </td>
+                <td><p>{{message.data.university}}</p></td>
+              </tr>
+              <tr ng-if="message.data.reg">
+                <td>
+                  <p><b>Registration NO.:</b></p>
+                </td>
+                <td><p>{{message.data.reg}}</p></td>
+              </tr>
+              <tr>
+                <td>
+                  <p><b>Events: </b></p>
+                </td>
+                <td ><p ng-repeat="p in message.data.eventname">{{p}},<br></p></td>
+              </tr>
+      
+            </table>
+            <p class="center" style="color:#faa41a">(P.S. Stop Stalking :p)</p>
+        </div> 

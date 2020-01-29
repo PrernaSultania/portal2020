@@ -1,0 +1,95 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+
+    <style>
+    .container{
+        width:80%;
+        background-color: white;
+        /* overflow-x: scroll; */
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .innerContainer{
+        overflow-x: scroll;
+    }
+    th{
+        font-weight: bolder;
+        text-align: center;
+    }
+    </style>
+
+</head>
+
+<body>
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+            <div>
+                    <a class="logout" href="/logout"> Logout</a>
+                  </div>
+                
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+    <div>&nbsp;</div>
+
+    <h1 align="center" class="title">Receipt Details</h1>
+        <%- include partials/adminnav %>
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+    <div class="container">
+
+            <div class="innerContainer">
+        <table class="striped">
+            <th>Name</th>
+            <th>Transaction ID</th>
+            <th>TPSL Transaction ID</th>
+            <th>Bank RefNo.</th>
+            <th>Email</th>
+            <th>Transaction Date</th>
+            <th>Event</th>
+            <th>Paid</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <% data.forEach(function(detail){ %>
+                <tr>
+                    <td><%= detail["userId.name"] %></td>
+                    <td><%= detail["payment.transactionId"] %></td>
+                    <td><%= detail["payment.TPSLTransactionId"] %></td>
+                    <td><%= detail["payment.bankReferenceNumber"] %></td>
+                    <td><%= detail["userId.email"] %></td>
+                    <td><%= detail["payment.transactionDate"] %></td>
+                    <td><%= detail["event.name"] %></td>
+                    <td><%= detail["payment.paid"] %></td>
+                    <td><%= detail["payment.amount"] %></td>
+                    <td><%= detail["payment.type"] %></td>
+                </tr>
+                <% }); %>
+        </table>
+</div>
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+</body>
+</html>

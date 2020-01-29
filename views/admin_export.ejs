@@ -1,0 +1,118 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ARCS'19</title>
+
+    <!-- links -->
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="/stylesheets/register.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"
+    ></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <!-- JS links -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script> -->
+<style>
+body{
+    height: 100%;
+}
+form{
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+
+        <div class="shape overlay">
+                <img id="eventlogo" src="/images/arcs_logo.png">
+            </div>
+            <div>
+                    <a class="login" href="/logout"> LogOut</a>
+                  </div>
+
+    <div>
+        <img class="chapterlogo" src="/images/IEEECSlogo.png">
+    </div>
+
+
+<section class="section">
+            <div class="card">
+                    <section class="section" ng-app="myApp" ng-controller="exportCtrl"  ng-init="initialize(<%=JSON.stringify(data)%>)">
+                            <div class="columns">
+                                <div class="column">
+                                    <h1 class="title has-text-centered">Export</h1>
+                                    <hr>
+                                    <form action="/admin/export/id" method="POST" name="export" novalidate>
+                                        <!-- Event name -->
+                                        <div class="field">
+                                            <label for="event" class="label">Event name</label>
+                                            <div class="control"  style="text-align:center">
+                                                <div class="select">
+                                                    <select name="id" id="event">
+                                                        <option value="all" selected>All</option>
+                                                        <option value="{{event._id}}" ng-repeat="event in data" ng-if="!event.comboOrNot">{{event.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="text-align:center">
+                                            <input type="submit" value="Export" class="button is-info">
+                                        </div>
+                                    </form><br>
+                                 
+                                </div>
+                            </div>
+                        </section>                
+        </div>
+</section>
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('exportCtrl', function ($scope, $http) {
+                $scope.initialize = function(data) {
+                    data = JSON.parse(JSON.stringify(data));
+                    $scope.data = data;
+                    console.log($scope.data);
+                };
+                
+                // $http.get('/events')
+                //     .then(function (response) {
+                //         if (!response.data) {
+                //             alert('Event data not found.')
+                //         }
+                //         $scope.events = response.data;
+                //     });
+            });
+        </script>
+</body>
+
+</html>
